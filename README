@@ -1,0 +1,39 @@
+CERINTA 1
+    ->hire:Am tratat 3 cazuri principale:
+        ~Cazul in care ierarhia este goala si trebuie sa introducem noi primul nod(nodul radacina);
+        ~Cazul in care ierarhia nu este goala iar managerul la care trebuie sa introducem nu avea o echipa formata(trebuie sa alocam memorie echipei)
+        ~Cazul in care ierarhia nu este goala iar managerul avea deja o echipa formata(trebuia sa realocam memorie, respectiv sa sortam echipa lexicografic dupa ce faceam modificarile necesare)
+    ->fire:
+        ~Verificam daca nodul pe care ne cere sa il eliminam se afla in ierarhie si daca da:
+        ~Daca este frunza(simplu angajat, fara o echipa proprie) doar il eliminam din echipa managerului sau;
+        ~Daca nu este frunza(este manager) il eliminam din echipa managerului sau si adaugam tot in echipa managerului subalternii sai(ai nodului pe care il eliminam);
+    ->promote:
+        ~Verificam daca angajatul care ni se cere sa fie promovat se afla in ierarhie si daca este cel putin pe nivelul 2;
+        ~In caz ca se indeplinesc conditiile mentionate anterior ii mutam echipa angajatului promovat la echipa managerului sau;
+        ~Ulterior il concediem si il vom reangaja dar de aceasta data in echipa managerului managerului sau curent(cu 2 nivele mai sus practic);
+    ->move_employee:
+        ~Principiul este asemanator cu cel de la promote doar ca de aceasta data ni se specifica o locatie exacta unde sa reintroducem angajatul(nu la managerul managerului ca la promote);
+        ~In caz ca angajatul pe care ni se cere sa il mutam si managerul la care trebuie sa il mutam exista efectuam urmatorii pasi:
+        ~Ii mutam echipa la echipa managerului sau(in caz ca are echipa), il concediem si il reangajam la managerul specificat in parametrul functiei;
+    ->move_team:
+        ~Principiu asemanator cu cel de la move_employee doar ca de aceasta data mutam angajatul "cu totul"(impreuna cu echipa sa)
+        ~Il eliminam din echipa managerului sau si ulterior il vom muta impreuna cu echipa sa in echipa noului manager primit ca parametru in functie;
+    ->fire_team:
+        ~Eliminam nodul cerut din echipa managerului sau;
+CERINTA 2 
+    ->get_employees_by_manager:
+        ~M-am folosit de structura auxiliara si functiile pe care le-am definit pentru a cauta nodul manager de unde trebuie sa incepem afisarea;
+        ~Am introdus in structura de tip vector numele fiecarui angajat ce trebuie afisat;
+        ~Am sortat vectorul asa cum ni s-a cerut in problema;
+    ->get_employees_by_level:
+        ~La fel ca la get_employees_by_manager doar ca de aceasta data parcurgeam toata ierarhia si in plus aveam si o conditie de introducere in vectorul de nume;
+        ~Aceasta conditie consta in faptul ca nivelul angajatului sa fie egal cu nivelul ce ni se cerea sa fie afisat;
+    ->get_best_manager:
+        ~Similar, doar ca de aceasta data conditia de introducere in vectorul de nume era ca dimensiunea echipei sa fie egala cu maximul;
+        ~Acest maxim il calculam cu ajutorul functiei create ca fiind dimensiunea maxima a echipei unui manager gasita in ierarhie;
+CERINTA 3:reorganize
+    ->Initial am incercat o metoda iterativa prin care plecam de la nodul dupa care se face reorganizarea;
+    ->Il stergeam din echipa managerului sau, ii realizam legatura cu managerul managerului, managerul sau il transferam in echipa sa;
+    ->Aceasta metoda nu functiona deoarece pierdeam din pointerii catre manageri si nu puteam avansa mai sus in arbore pentru a face urmatoarele modificari in legaturi;
+    ->Am creat o functie recursiva de doi parametrii(tree-nodul curent si mng-managerul cu care trebuie sa ii facem legatura)
+    ->Apelam functia recursiv mai intai si ulterior realizam urmatoarele operatii:eliminam nodul din echipa managerului sau, managerul il adaugam in echipa sa, ii realizam legatura cu noul manager;
